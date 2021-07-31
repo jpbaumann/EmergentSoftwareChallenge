@@ -1,0 +1,49 @@
+﻿@page "/"
+
+<h1>Software</h1>
+
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label for="filter">Version Filter:</label>
+            <input type="text" class="form-control" id="filter" @oninput="OnFilterChanged">
+        </div>
+    </form>
+</div>
+
+@if (Software == default)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <span class="sort-link" @onclick="@(() => OnHeaderClick("Name"))">Name</span>
+                    @if (SortDirection != default && SortColumnName == "Name")
+                    {
+                        <span class=@GetFilterAdorner()></span>
+                    }
+                </th>
+                <th>
+                    <span class="sort-link" @onclick="@(() => OnHeaderClick("Version"))">Version</span>
+                    @if (SortDirection != default && SortColumnName == "Version")
+                    {
+                        <span class=@GetFilterAdorner()></span>
+                    }
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var software in Software)
+            {
+                <tr>
+                    <td>@software.Name</td>
+                    <td>@software.Version</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
